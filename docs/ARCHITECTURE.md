@@ -6,7 +6,7 @@
 
 - src/main.rs：声明 cli、remove 模块；main 仍只输出 Hello, world!，尚未连接真实参数、输出与退出码。
 - src/cli.rs：parse_args 接收 &[OsString]，通过 split_first 分派；parse_remove_args 解析删除参数。返回 Command、RemoveOptions 或 ParseError，不访问文件系统。
-- src/remove.rs：删除逻辑模块，目前 remove_path 仍固定返回成功，两个测试函数尚为空体。
+- src/remove.rs：remove_path(&Path, recursive) 已支持普通文件、空目录与目录树删除，6 个删除测试通过。preview_path 返回 io::Result<Vec<PathBuf>>，外层收集已写，collect_preview 仍为空实现；6 个预览测试处于预期红灯，1 个 Windows 链接测试因权限要求显式忽略。
 - Cargo.toml：普通依赖为空；开发依赖 tempfile = "3.27.0"，只在测试模块中使用。
 
 当前结构足够，不提前增加 workspace、trait 框架或多层目录。以下完整执行职责与数据流仍是后续实现方向。
